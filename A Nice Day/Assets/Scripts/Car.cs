@@ -10,6 +10,11 @@ public class NewBehaviourScript : MonoBehaviour
     public WheelCollider wheelColliderBackLeft;
     public WheelCollider wheelColliderBackRight;
 
+    public Transform wheelFrontLeft;
+    public Transform wheelFrontRight;
+    public Transform wheelBackLeft;
+    public Transform wheelBackRight;
+
     // Start is called before the first frame update
     void Start()
     {
