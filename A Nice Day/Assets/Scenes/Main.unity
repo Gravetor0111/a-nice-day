@@ -512,8 +512,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: -0.06486812, y: 0.4316661, z: -0.031121463, w: -0.8991596}
-  m_LocalPosition: {x: -22.678669, y: 5.2173066, z: -6.2637033}
+  m_LocalRotation: {x: -0.04665959, y: 0.61722165, z: -0.036702864, w: -0.78454643}
+  m_LocalPosition: {x: -18.525549, y: 4.1672673, z: -9.079473}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -711,6 +711,37 @@ Transform:
   m_Father: {fileID: 288443157}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2145851857
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2145851858}
+  m_Layer: 0
+  m_Name: CenterOfMass
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2145851858
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2145851857}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.56, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1135271923609402784}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &389089288210501507
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -854,12 +885,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9181669326754228949}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -36, y: 6.09, z: 0}
+  m_LocalPosition: {x: -36, y: 1.21, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 288443157}
   - {fileID: 978492229}
+  - {fileID: 2145851858}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1421,13 +1453,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92d7ffbebb95842499e2e548197d1637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelColliderFrontLeft: {fileID: 0}
-  wheelColliderFrontRight: {fileID: 0}
-  wheelColliderBackLeft: {fileID: 0}
-  wheelColliderBackRight: {fileID: 0}
-  wheelFrontLeft: {fileID: 0}
-  wheelFrontRight: {fileID: 0}
-  wheelBackLeft: {fileID: 0}
-  wheelBackRight: {fileID: 0}
-  motorTorque: 100
+  centerOfMass: {fileID: 2145851858}
+  wheelColliderFrontLeft: {fileID: 1256023695}
+  wheelColliderFrontRight: {fileID: 938010220}
+  wheelColliderBackLeft: {fileID: 914866899}
+  wheelColliderBackRight: {fileID: 401153605}
+  wheelFrontLeft: {fileID: 5253955509796593691}
+  wheelFrontRight: {fileID: 5209302238359426136}
+  wheelBackLeft: {fileID: 5813611862945010845}
+  wheelBackRight: {fileID: 8030124196239290665}
+  motorTorque: 600
   maxSteer: 20
