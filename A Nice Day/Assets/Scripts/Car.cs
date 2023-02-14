@@ -24,10 +24,32 @@ public class Car : MonoBehaviour
         
     }
 
+    void FixedUpdate()
+    {
+        // wheelColliderBackLeft.motorTorque = Input.GetAxis("Vertical") * motorTorque;
+        // wheelColliderBackRight.motorTorque = Input.GetAxis("Vertical") * motorTorque;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        wheelColliderBackLeft.motorTorque = Input.GetAxis("Vertical") * motorTorque;
-        wheelColliderBackRight.motorTorque = Input.GetAxis("Vertical") * motorTorque;
+        var pos = Vector3.zero;
+        var ros = Quaternion.identity;
+
+        // wheelColliderBackLeft.GetWorldPose(out pos, out ros);
+        // wheelBackLeft.position = pos;
+        // wheelBackLeft.rotation = ros;
+
+        // wheelColliderBackRight.GetWorldPose(out pos, out ros);
+        // wheelBackRight.position = pos;
+        // wheelBackRight.rotation = ros * Quaternion.Euler(0,180,0);
+        
+        // wheelColliderFrontLeft.GetWorldPose(out pos, out ros);
+        // wheelFrontLeft.position = pos;
+        // wheelFrontLeft.rotation = ros;
+        
+        // wheelColliderFrontRight.GetWorldPose(out pos, out ros);
+        // wheelFrontRight.position = pos;
+        // wheelFrontRight.rotation = ros * Quaternion.Euler(0,180,0);
     }
 }
