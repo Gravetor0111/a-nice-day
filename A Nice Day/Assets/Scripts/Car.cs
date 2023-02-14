@@ -15,6 +15,9 @@ public class Car : MonoBehaviour
     public Transform wheelBackLeft;
     public Transform wheelBackRight;
 
+    public float motorTorque = 100f;
+    public float maxSteer = 20f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +27,7 @@ public class Car : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        wheelColliderBackLeft.motorTorque = Input.GetAxis("Vertical") * motorTorque;
+        wheelColliderBackRight.motorTorque = Input.GetAxis("Vertical") * motorTorque;
     }
 }
