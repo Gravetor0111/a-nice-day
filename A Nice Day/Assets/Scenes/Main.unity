@@ -647,6 +647,8 @@ GameObject:
   - component: {fileID: 978492229}
   - component: {fileID: 978492231}
   - component: {fileID: 978492230}
+  - component: {fileID: 978492233}
+  - component: {fileID: 978492232}
   m_Layer: 0
   m_Name: Colliders
   m_TagString: Untagged
@@ -676,12 +678,12 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 978492228}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 6d2159c8c9eceb04c920b6759a5f4d88, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.99, y: 1.07, z: 7.62}
-  m_Center: {x: 0, y: 1.25, z: -1.39}
+  m_Size: {x: 3.99, y: 1.07, z: 2.65}
+  m_Center: {x: 0, y: 1.22, z: -0.61}
 --- !u!65 &978492231
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -689,12 +691,40 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 978492228}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 6d2159c8c9eceb04c920b6759a5f4d88, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4.5, y: 1.47, z: 10.59}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 4.23, y: 1.54, z: 9.4}
+  m_Center: {x: 0, y: 0.06, z: 0.05}
+--- !u!136 &978492232
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 978492228}
+  m_Material: {fileID: 13400000, guid: 6d2159c8c9eceb04c920b6759a5f4d88, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.78
+  m_Height: 4.24
+  m_Direction: 0
+  m_Center: {x: 0, y: -0, z: -4.47}
+--- !u!136 &978492233
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 978492228}
+  m_Material: {fileID: 13400000, guid: 6d2159c8c9eceb04c920b6759a5f4d88, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.9
+  m_Height: 4.24
+  m_Direction: 0
+  m_Center: {x: 0, y: 0.12, z: 4.39}
 --- !u!1 &1256023693
 GameObject:
   m_ObjectHideFlags: 0
@@ -1531,5 +1561,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centerOfMass: {fileID: 2145851858}
-  motorTorque: 600
-  maxSteer: 20
+  motorTorque: 2000
+  maxSteer: 30
