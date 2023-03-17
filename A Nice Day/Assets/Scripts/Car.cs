@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Car : MonoBehaviour
 {
-    public Transform centerOfMass;
-    public float motorTorque = 500f;
-    public float maxSteer = 20f;
+    public Transform CenterOfMass;
+    public float motorTorque = 2000f;
+    public float maxSteer = 30f;
+    public float brakeForce = 10000f;
 
     public float Steer { get; set; }
     public float Throttle { get; set; }
+    public bool Brake { get; set; }
+    
 
     private Rigidbody _rigidbody;
     private Wheel[] wheels;
@@ -19,18 +22,28 @@ public class Car : MonoBehaviour
     {
         wheels = GetComponentsInChildren<Wheel>();
         _rigidbody = GetComponent<Rigidbody>();
-        _rigidbody.centerOfMass = centerOfMass.localPosition;
+        _rigidbody.centerOfMass = CenterOfMass.localPosition;
     }
 
     // Update is called once per frame
     void Update()
     {   
-        Steer = GameManager.Instance.inputController.SteerInput;
-        Throttle = GameManager.Instance.inputController.ThrottelInput;
+        Steer = InputManager.driveInput.x;
+        Throttle = InputManager.driveInput.y;
+        Brake = InputManager.handBrakeInput;
+        
         foreach (var wheel in wheels)
         {
             wheel.SteerAngle = Steer * maxSteer;
             wheel.Torque = Throttle * motorTorque;
+            if (Brake)
+            {
+                wheel.BrakeForce = brakeForce;
+            }
+            else
+            {
+                wheel.BrakeForce = 0f;
+            }
         }
     }
 }

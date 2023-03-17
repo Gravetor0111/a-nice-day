@@ -7,9 +7,11 @@ public class Wheel : MonoBehaviour
     public bool steer;
     public bool invertSteer;
     public bool power;
+    public bool handbreak;
 
     public float SteerAngle { get; set; }
     public float Torque { get; set; }
+    public float BrakeForce { get; set; }
 
     private WheelCollider wheelCollider;
     private Transform wheelTransform;
@@ -39,6 +41,11 @@ public class Wheel : MonoBehaviour
         if (power)
         {
             wheelCollider.motorTorque = Torque;
+        }
+
+        if (handbreak)
+        {
+            wheelCollider.brakeTorque = BrakeForce;
         }
     }
 }
