@@ -2,44 +2,55 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CharacterController))]
 public class PlayerTPPScript : MonoBehaviour
 {
-    public CharacterController controller;
-    public Transform cam;
+    private CharacterController controller;
+    private Vector3 playerVelocity;
+    private bool groundedPlayer;
 
-    public float speed = 6f;
-    public float turnSmoothTime = 0.1f;
-    public float turnSmoothVelocity;
+    [SerializeField]
+    private float playerSpeed = 2.0f;
+    [SerializeField]
+    private float jumpHeight = 1.0f;
+    [SerializeField]
+    private float gravityValue = -9.81f;
 
-    private Animator anim;
-
-    void Start()
+    private void Start()
     {
-        anim = GetComponent<Animator>();
+        controller = GetComponent<CharacterController>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-
-        if (direction.magnitude >= 0.1f)
+        groundedPlayer = controller.isGrounded;
+        if (groundedPlayer && playerVelocity.y < 0)
         {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-            
-            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            controller.Move(moveDir.normalized * speed * Time.deltaTime);
-            anim.SetBool("IsMoving", true);
+            playerVelocity.y = 0f;
         }
 
-        else
+        Vector3 move = new Vector3(InputManager.moveInput.x, 0, InputManager.moveInput.y);
+        controller.Move(move * Time.deltaTime * playerSpeed);
+
+        if (move != Vector3.zero)
         {
-            anim.SetBool("IsMoving", false);
+            gameObject.transform.forward = move;
+            Debug.Log(move);
+            if (InputManager.sprintInput)
+            {
+                gameObject.transform.forward = move * 5;
+                Debug.Log("Sprinting!");
+            }
         }
 
+        // Changes the height position of the player..
+        if (InputManager.jumpInput && groundedPlayer)
+        {
+            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+            Debug.Log("Jumping!");
+        }
+
+        playerVelocity.y += gravityValue * Time.deltaTime;
+        controller.Move(playerVelocity * Time.deltaTime);
     }
 }

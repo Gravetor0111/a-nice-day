@@ -22,6 +22,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Sprint",
+                    "type": "Button",
+                    "id": "27b1d228-e261-406d-88d4-c8a0a50bb853",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -90,6 +99,17 @@
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "9c85344f-512e-4c21-a542-2eb44fc52a4f",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -109,7 +129,7 @@
                 {
                     "name": "Handbrake",
                     "type": "Button",
-                    "id": "0a6d5d14-f679-486e-bf18-ab1df85c939b",
+                    "id": "6e71a430-4513-4e8e-ac63-60e44e2ad438",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -174,7 +194,7 @@
                 },
                 {
                     "name": "",
-                    "id": "34b3aa08-28db-4fc9-8b92-2284a2bd3f3a",
+                    "id": "a0c2681e-3069-49d4-bd6f-bbd9f7b5ea48",
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
