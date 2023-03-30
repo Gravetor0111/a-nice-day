@@ -43,20 +43,20 @@ public class PlayerTPPScript : MonoBehaviour
         }
 
         Vector3 move = new Vector3(moveAction.ReadValue<Vector2>().x, 0, moveAction.ReadValue<Vector2>().y);
-        controller.Move(move * Time.deltaTime * playerSpeed);
         
         if (move != Vector3.zero)
         {
             gameObject.transform.forward = move;
+            controller.Move(move * Time.deltaTime * playerSpeed);
+            anim.SetBool("IsWalking", true);
             
             if (sprintAction.ReadValue<float>() > 0 && move != Vector3.zero)
             {
-                
-                controller.Move(move * Time.deltaTime * (playerSpeed * 2));;
+                controller.Move(move * Time.deltaTime * (playerSpeed * 2));
+                anim.SetBool("IsRunning", true);
             }
-            
         }
-        
+        // anim.SetBool("IsWalking", false);
         // Changes the height position of the player..
         if (jumpAction.ReadValue<float>() > 0f && groundedPlayer)
         {
