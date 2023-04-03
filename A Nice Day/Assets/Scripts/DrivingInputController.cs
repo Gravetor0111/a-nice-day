@@ -10,6 +10,7 @@ public class DrivingInputController : MonoBehaviour
     private InputAction driveAction;
     private InputAction handBrakeAction;
 
+
     public Transform CenterOfMass;
     public float motorTorque = 2000f;
     public float maxSteer = 30f;
@@ -19,6 +20,7 @@ public class DrivingInputController : MonoBehaviour
     public float Throttle { get; set; }
     public float Brake { get; set; }
 
+    //private bool isBeingDriven = false;
     private Rigidbody _rigidbody;
     private Wheel[] wheels;
 

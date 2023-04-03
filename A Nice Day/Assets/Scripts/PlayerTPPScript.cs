@@ -8,19 +8,17 @@ public class PlayerTPPScript : MonoBehaviour
 {
     private PlayerInput playerInput;
     //TPP Player Control Variables
-    private InputAction moveAction;
-    private InputAction sprintAction;
-    private InputAction jumpAction;
-
+    private InputAction moveAction, sprintAction, jumpAction, useAction;
     private Animator anim;
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
+    private bool isDriving;
 
     [SerializeField]
-    private float playerSpeed = 3.0f;
+    private float playerSpeed = 14.0f;
     [SerializeField]
-    private float jumpHeight = 1.0f;
+    private float jumpHeight = 2.0f;
     [SerializeField]
     private float gravityValue = -9.81f;
 
@@ -28,10 +26,10 @@ public class PlayerTPPScript : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
-        playerInput = GetComponent<PlayerInput>();
         moveAction = playerInput.actions["Movement"];
         jumpAction = playerInput.actions["Jump"];
         sprintAction = playerInput.actions["Sprint"];
+        useAction = playerInput.actions["UseItem"];
     }
 
     void Update()
@@ -48,15 +46,12 @@ public class PlayerTPPScript : MonoBehaviour
         {
             gameObject.transform.forward = move;
             controller.Move(move * Time.deltaTime * playerSpeed);
-            anim.SetBool("IsWalking", true);
             
             if (sprintAction.ReadValue<float>() > 0 && move != Vector3.zero)
             {
                 controller.Move(move * Time.deltaTime * (playerSpeed * 2));
-                anim.SetBool("IsRunning", true);
             }
         }
-        // anim.SetBool("IsWalking", false);
         // Changes the height position of the player..
         if (jumpAction.ReadValue<float>() > 0f && groundedPlayer)
         {
@@ -65,5 +60,10 @@ public class PlayerTPPScript : MonoBehaviour
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+
+        if (useAction.ReadValue<float>() > 0f)
+        {
+            Debug.Log("Drive Car");
+        }
     }
 }
