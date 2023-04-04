@@ -39,6 +39,9 @@ public class DrivingInputController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
+
+
+
         Steer = driveAction.ReadValue<Vector2>().x;
         Throttle = driveAction.ReadValue<Vector2>().y;
         Brake = handBrakeAction.ReadValue<float>();
