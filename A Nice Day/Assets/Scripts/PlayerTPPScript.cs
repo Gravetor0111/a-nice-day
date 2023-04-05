@@ -1,22 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerTPPScript : MonoBehaviour
-{
-    private PlayerInput playerInput;
-    //TPP Player Control Variables
-    private InputAction moveAction, sprintAction, jumpAction, enterExitAction;
+{   
     private Animator anim;
     private CharacterController controller;
     private GameObject triggerVolume;
     private Vector3 playerVelocity;
-    private Transform sphereTransform;
-    // private GameObject currentCar = null;
     private bool groundedPlayer;
-    // private bool inCar;
+
+    // Sphere Collider
+    private Transform sphereTransform;
     
 
     [SerializeField]
@@ -25,19 +21,16 @@ public class PlayerTPPScript : MonoBehaviour
     private float jumpHeight = 2.0f;
     [SerializeField]
     private float gravityValue = -9.81f;
-    // private float carInteractionDistance = 10f;
+    public float carInteractionDistance = 10f;
 
     void Start()
     {
         anim = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
-        playerInput = GetComponent<PlayerInput>();
+        
+        // Car related stuff
         sphereTransform = transform.Find("TriggerSphere");
-        SphereCollider sphereTrigger = sphereTransform.GetComponentInChildren<SphereCollider>();
-        moveAction = playerInput.actions["Movement"];
-        jumpAction = playerInput.actions["Jump"];
-        sprintAction = playerInput.actions["Sprint"];
-        enterExitAction = playerInput.actions["EnterExit"];
+        SphereCollider sphereTrigger = sphereTransform.GetComponentInChildren<SphereCollider>();    
     }
 
     void Update()
@@ -48,50 +41,30 @@ public class PlayerTPPScript : MonoBehaviour
             playerVelocity.y = 0f;
         }
 
-        Vector3 move = new Vector3(moveAction.ReadValue<Vector2>().x, 0, moveAction.ReadValue<Vector2>().y);
+        Vector3 move = new Vector3(InputManager.movementInp.x, 0, InputManager.movementInp.y);
         if (move != Vector3.zero)
         {
             Walk(move);
-            if (sprintAction.ReadValue<float>() > 0 && move != Vector3.zero)
+            if (InputManager.sprintInp > 0 && move != Vector3.zero)
             {
                 Run(move);
             }
         }
 
-        if (jumpAction.ReadValue<float>() > 0f && groundedPlayer)
+        if (InputManager.jumpInp > 0f && groundedPlayer)
         {
             Jump();
         }
-        
-        
-
         // Changes the height position of the player..
-        
-
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
-
-        if (enterExitAction.ReadValue<float>() > 0f)
-        {
-            Debug.Log("Drive Car");
-            
-        }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Vehicle")
-        {
-            Debug.Log("Now you can enter");
-            Debug.Log(sphereTransform);
-        }
-    }
+    
 
+    
 
-
-
-
-
+// OTHER METHODS
     private bool IsGrounded() 
     {
         RaycastHit hit;
@@ -120,5 +93,19 @@ public class PlayerTPPScript : MonoBehaviour
     {
         Debug.Log("Jump");
         playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+    }
+
+    public void HopIn()
+    {
+        transform.SetPositionAndRotation(GameObject.Find("SeatLocation").transform.position, GameObject.Find("SeatLocation").transform.rotation);
+        InputManager.inCar = true;
+        Debug.Log(InputManager.inCar);
+    }
+
+    public void GetOut()
+    {
+        transform.SetPositionAndRotation((InputManager.vehicleTransform.position - InputManager.vehicleTransform.TransformDirection(Vector3.left)), InputManager.vehicleTransform.rotation);
+        InputManager.inCar = false;
+        Debug.Log(InputManager.inCar);
     }
 }

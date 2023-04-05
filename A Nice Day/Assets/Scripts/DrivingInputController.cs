@@ -1,15 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class DrivingInputController : MonoBehaviour
 {
-    //Car Control Variables
-    private PlayerInput playerInput;
-    private InputAction driveAction;
-    private InputAction handBrakeAction;
 
+    //Car Inputs from InputManager
+    float driveInput, handBrakeInput;
+    
 
     public Transform CenterOfMass;
     public float motorTorque = 2000f;
@@ -27,25 +25,23 @@ public class DrivingInputController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerInput = GetComponent<PlayerInput>();
         wheels = GetComponentsInChildren<Wheel>();
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.centerOfMass = CenterOfMass.localPosition;
-        driveAction = playerInput.actions["Drive"];
-        handBrakeAction = playerInput.actions["Handbrake"];
     }
 
 
     // Update is called once per frame
     void Update()
     {   
-
-
-
-        Steer = driveAction.ReadValue<Vector2>().x;
-        Throttle = driveAction.ReadValue<Vector2>().y;
-        Brake = handBrakeAction.ReadValue<float>();
+        Steer = InputManager.driveInp.x;
+        Throttle = InputManager.driveInp.y;
+        Brake = InputManager.handBrakeInp;
         
+        Debug.Log(Steer);
+        Debug.Log(Throttle);
+        Debug.Log(Brake);
+
         foreach (var wheel in wheels)
         {
             wheel.SteerAngle = Steer * maxSteer;
@@ -60,4 +56,6 @@ public class DrivingInputController : MonoBehaviour
             }
         }
     }
+
+    
 }

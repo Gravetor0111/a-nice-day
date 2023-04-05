@@ -33,9 +33,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "EnterExit",
+                    "name": "Enter",
                     "type": "Button",
                     "id": "bb4cc116-8542-478a-b1b9-e3a4089f96da",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Exit",
+                    "type": "Button",
+                    "id": "7a0a3a62-57a6-46df-bd6a-26ac1c697939",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -127,7 +136,18 @@
                     "interactions": "Hold",
                     "processors": "",
                     "groups": "",
-                    "action": "EnterExit",
+                    "action": "Enter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5d30cd27-ce48-4e8a-adc6-ad83cb766514",
+                    "path": "<Keyboard>/x",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Exit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
