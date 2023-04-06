@@ -11,6 +11,8 @@ public class InputManager : MonoBehaviour
     DrivingInputController vehicle1;
 
     private PlayerInput playerInput;
+
+
     // Player Controls
     private InputAction moveAction, sprintAction, jumpAction, enterAction, exitAction;
 
@@ -35,19 +37,17 @@ public class InputManager : MonoBehaviour
     void Start()
     {
         playerInput = GetComponent<PlayerInput>();
-        player1 = GetComponent<PlayerTPPScript>();
-        vehicle1 = GetComponent<DrivingInputController>();
         
         // For Player
         moveAction = playerInput.actions["Movement"];
         jumpAction = playerInput.actions["Jump"];
         sprintAction = playerInput.actions["Sprint"];
         enterAction = playerInput.actions["Enter"];
-        exitAction = playerInput.actions["Exit"];
 
         // For Vehicle
         driveAction = playerInput.actions["Drive"];
         handBrakeAction = playerInput.actions["Handbrake"];
+        exitAction = playerInput.actions["Exit"];
         inCar = false;
 
         p1GameObject = GameObject.Find("TPPCharacter");
@@ -55,6 +55,9 @@ public class InputManager : MonoBehaviour
 
         playerTransform = p1GameObject.transform;
         vehicleTransform = v1GameObject.transform;
+
+        player1 = p1GameObject.GetComponentInChildren<PlayerTPPScript>();
+        vehicle1 = v1GameObject.GetComponentInChildren<DrivingInputController>();
 
     }
 
@@ -66,25 +69,28 @@ public class InputManager : MonoBehaviour
         jumpInp = jumpAction.ReadValue<float>();
         sprintInp = sprintAction.ReadValue<float>();
         enterInp = enterAction.ReadValue<float>();
-        exitInp = exitAction.ReadValue<float>();
 
         // Vehicle
-        driveInp = moveAction.ReadValue<Vector2>();
-        handBrakeInp = jumpAction.ReadValue<float>();
+        driveInp = driveAction.ReadValue<Vector2>();
+        handBrakeInp = handBrakeAction.ReadValue<float>();
+        exitInp = exitAction.ReadValue<float>();
 
-        Debug.Log(movementInp);
-        Debug.Log(jumpInp);
-        Debug.Log(sprintInp);
-        Debug.Log(driveInp);
+        
+        // Debug.Log(driveInp);
+        // Debug.Log(handBrakeInp);
 
 
         float distance = Vector3.Distance(playerTransform.position, vehicleTransform.position);
+        Debug.Log("Player object: " + player1);
+        Debug.Log("Vehicle object: " + vehicle1);
+        Debug.Log("IN CAR: " + inCar);
+        Debug.Log("Enter INP: " + enterInp);
         
         if (distance <= player1.carInteractionDistance && enterInp > 0f && !inCar)
         {
             Debug.Log("Entering Car");
             player1.HopIn();
-            p1GameObject.SetActive(false);
+            
 
         }
 
@@ -92,7 +98,7 @@ public class InputManager : MonoBehaviour
         {
             Debug.Log("Exiting Car");
             player1.GetOut();
-            p1GameObject.SetActive(true);
+            
             
         }
 

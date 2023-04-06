@@ -64,7 +64,7 @@ public class PlayerTPPScript : MonoBehaviour
 
     
 
-// OTHER METHODS
+    // OTHER METHODS
     private bool IsGrounded() 
     {
         RaycastHit hit;
@@ -99,13 +99,13 @@ public class PlayerTPPScript : MonoBehaviour
     {
         transform.SetPositionAndRotation(GameObject.Find("SeatLocation").transform.position, GameObject.Find("SeatLocation").transform.rotation);
         InputManager.inCar = true;
-        Debug.Log(InputManager.inCar);
+        Debug.Log("IS IN THE CAR NOW");
     }
 
     public void GetOut()
     {
         transform.SetPositionAndRotation((InputManager.vehicleTransform.position - InputManager.vehicleTransform.TransformDirection(Vector3.left)), InputManager.vehicleTransform.rotation);
         InputManager.inCar = false;
-        Debug.Log(InputManager.inCar);
+        Debug.Log("HAS LEFT THE CAR");
     }
 }

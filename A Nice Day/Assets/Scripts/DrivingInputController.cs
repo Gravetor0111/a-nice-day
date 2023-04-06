@@ -37,10 +37,6 @@ public class DrivingInputController : MonoBehaviour
         Steer = InputManager.driveInp.x;
         Throttle = InputManager.driveInp.y;
         Brake = InputManager.handBrakeInp;
-        
-        Debug.Log(Steer);
-        Debug.Log(Throttle);
-        Debug.Log(Brake);
 
         foreach (var wheel in wheels)
         {
