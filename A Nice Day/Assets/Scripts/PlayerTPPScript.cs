@@ -10,6 +10,8 @@ public class PlayerTPPScript : MonoBehaviour
     private GameObject triggerVolume;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
+    private bool isWalking;
+    private bool isRunning;
 
     // Sphere Collider
     private Transform sphereTransform;
@@ -42,6 +44,12 @@ public class PlayerTPPScript : MonoBehaviour
         }
 
         Vector3 move = new Vector3(InputManager.movementInp.x, 0, InputManager.movementInp.y);
+
+        if (move == Vector3.zero)
+        {
+            Stand(move);
+        }
+
         if (move != Vector3.zero)
         {
             Walk(move);
@@ -58,6 +66,9 @@ public class PlayerTPPScript : MonoBehaviour
         // Changes the height position of the player..
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+
+        anim.SetBool("IsWalking", isWalking);
+        anim.SetBool("IsRunning", isRunning);
     }
 
     
@@ -78,14 +89,25 @@ public class PlayerTPPScript : MonoBehaviour
         return false;
     }
 
+    private void Stand(Vector3 move)
+    {
+        isWalking = false;
+        isRunning = false;
+    }
+
+
     private void Walk(Vector3 move)
     {
         gameObject.transform.forward = move;
+        isWalking = true;
+        isRunning = false;
         controller.Move(move * Time.deltaTime * playerSpeed);
     }
 
     private void Run(Vector3 move)
     {
+        isWalking = false;
+        isRunning = true;
         controller.Move(move * Time.deltaTime * (playerSpeed * 2));
     }
 
