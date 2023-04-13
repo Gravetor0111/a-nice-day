@@ -8,13 +8,15 @@ public class PlayerTPPScript : MonoBehaviour
     private Animator anim;
     private CharacterController controller;
     private GameObject triggerVolume;
+    private GameObject gameManagerObj;
     private Vector3 playerVelocity;
+    private InputManager imObject;
     private bool groundedPlayer;
-    private bool isWalking;
-    private bool isRunning;
+    private bool isWalking, isRunning, isJumping;
 
     // Sphere Collider
     private Transform sphereTransform;
+    
     
 
     [SerializeField]
@@ -32,11 +34,14 @@ public class PlayerTPPScript : MonoBehaviour
         
         // Car related stuff
         sphereTransform = transform.Find("TriggerSphere");
-        SphereCollider sphereTrigger = sphereTransform.GetComponentInChildren<SphereCollider>();    
+        SphereCollider sphereTrigger = sphereTransform.GetComponentInChildren<SphereCollider>();
+        gameManagerObj = GameObject.Find("GameManager");
+        imObject = gameManagerObj.GetComponentInChildren<InputManager>();
     }
 
     void Update()
     {
+        Debug.Log(imObject);
         groundedPlayer = IsGrounded();
         if (groundedPlayer && playerVelocity.y < 0)
         {
@@ -67,8 +72,14 @@ public class PlayerTPPScript : MonoBehaviour
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
 
+        if (InputManager.aimInp > 0f)
+        {
+            Aim();
+        }
+
         anim.SetBool("IsWalking", isWalking);
         anim.SetBool("IsRunning", isRunning);
+        // anim.SetBool("IsJumping", isJumping);
     }
 
     
@@ -93,14 +104,20 @@ public class PlayerTPPScript : MonoBehaviour
     {
         isWalking = false;
         isRunning = false;
+        // isJumping = false;
     }
 
+    private void CrouchIdle(Vector3 move)
+    {
+
+    }
 
     private void Walk(Vector3 move)
     {
         gameObject.transform.forward = move;
         isWalking = true;
         isRunning = false;
+        // isJumping = false;
         controller.Move(move * Time.deltaTime * playerSpeed);
     }
 
@@ -108,11 +125,20 @@ public class PlayerTPPScript : MonoBehaviour
     {
         isWalking = false;
         isRunning = true;
+        // isJumping = false;
         controller.Move(move * Time.deltaTime * (playerSpeed * 2));
+    }
+
+    private void CrouchMove(Vector3 move)
+    {
+
     }
 
     private void Jump()
     {
+        isWalking = false;
+        isRunning = false;
+        // isJumping = true;
         Debug.Log("Jump");
         playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
     }
@@ -121,13 +147,13 @@ public class PlayerTPPScript : MonoBehaviour
     {
         transform.SetPositionAndRotation(GameObject.Find("SeatLocation").transform.position, GameObject.Find("SeatLocation").transform.rotation);
         InputManager.inCar = true;
+        imObject.vehicleCam.Priority = 3;
+        imObject.playerCam.Priority = 1;
         Debug.Log("IS IN THE CAR NOW");
     }
 
-    public void GetOut()
+    private void Aim()
     {
-        transform.SetPositionAndRotation((InputManager.vehicleTransform.position - InputManager.vehicleTransform.TransformDirection(Vector3.left)), InputManager.vehicleTransform.rotation);
-        InputManager.inCar = false;
-        Debug.Log("HAS LEFT THE CAR");
+        Debug.Log("Clicked!");
     }
 }

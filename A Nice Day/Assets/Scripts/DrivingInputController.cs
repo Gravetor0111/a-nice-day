@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DrivingInputController : MonoBehaviour
 {
+    private GameObject gameManagerObj;
+    private InputManager imObject;
 
     //Car Inputs from InputManager
     float driveInput, handBrakeInput;
@@ -28,6 +30,8 @@ public class DrivingInputController : MonoBehaviour
         wheels = GetComponentsInChildren<Wheel>();
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.centerOfMass = CenterOfMass.localPosition;
+        gameManagerObj = GameObject.Find("GameManager");
+        imObject = gameManagerObj.GetComponentInChildren<InputManager>();
     }
 
 
@@ -53,5 +57,12 @@ public class DrivingInputController : MonoBehaviour
         }
     }
 
-    
+    public void GetOut()
+    {
+        InputManager.playerTransform.SetPositionAndRotation((InputManager.vehicleTransform.position - InputManager.vehicleTransform.TransformDirection(Vector3.left)), InputManager.vehicleTransform.rotation);
+        InputManager.inCar = false;
+        imObject.playerCam.Priority = 3;
+        imObject.vehicleCam.Priority = 1;
+        Debug.Log("HAS LEFT THE CAR");
+    }
 }

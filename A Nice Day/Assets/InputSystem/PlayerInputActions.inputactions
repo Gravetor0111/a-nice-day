@@ -40,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Aim",
+                    "type": "Button",
+                    "id": "86f879f4-4fef-4b0a-94c0-3647b7a1edb9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -124,10 +133,21 @@
                     "name": "",
                     "id": "e7c3bb40-1da1-47d4-b581-163ee2b3bc81",
                     "path": "<Keyboard>/f",
-                    "interactions": "Hold",
+                    "interactions": "Hold(duration=1,pressPoint=1)",
                     "processors": "",
                     "groups": "",
                     "action": "Enter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f903be87-5197-47cb-9f33-2877da058e46",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
