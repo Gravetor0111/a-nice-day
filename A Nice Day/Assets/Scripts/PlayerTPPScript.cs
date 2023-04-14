@@ -13,6 +13,7 @@ public class PlayerTPPScript : MonoBehaviour
     private InputManager imObject;
     private bool groundedPlayer;
     private bool isWalking, isRunning, isJumping;
+    bool boosted = false;
 
     // Sphere Collider
     private Transform sphereTransform;
@@ -26,6 +27,7 @@ public class PlayerTPPScript : MonoBehaviour
     [SerializeField]
     private float gravityValue = -9.81f;
     public float carInteractionDistance = 10f;
+    public GameObject Reticle;
 
     void Start()
     {
@@ -41,7 +43,6 @@ public class PlayerTPPScript : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(imObject);
         groundedPlayer = IsGrounded();
         if (groundedPlayer && playerVelocity.y < 0)
         {
@@ -74,8 +75,14 @@ public class PlayerTPPScript : MonoBehaviour
 
         if (InputManager.aimInp > 0f)
         {
+            Debug.Log(InputManager.aimInp);
             Aim();
         }
+
+        imObject.aimCam.Priority = 2;
+        boosted = false;
+        Reticle.SetActive(boosted);
+
 
         anim.SetBool("IsWalking", isWalking);
         anim.SetBool("IsRunning", isRunning);
@@ -145,15 +152,25 @@ public class PlayerTPPScript : MonoBehaviour
 
     public void HopIn()
     {
-        transform.SetPositionAndRotation(GameObject.Find("SeatLocation").transform.position, GameObject.Find("SeatLocation").transform.rotation);
+        //transform.SetPositionAndRotation(GameObject.Find("SeatLocation").transform.position, GameObject.Find("SeatLocation").transform.rotation);
         InputManager.inCar = true;
         imObject.vehicleCam.Priority = 3;
         imObject.playerCam.Priority = 1;
-        Debug.Log("IS IN THE CAR NOW");
     }
 
     private void Aim()
     {
-        Debug.Log("Clicked!");
+        if (imObject.aimCam != null)
+        {
+            if (!boosted)
+            {
+                imObject.aimCam.Priority = 4;
+                boosted = true;
+            }
+        }
+        if (Reticle != null)
+        {
+            Reticle.SetActive(boosted);
+        }
     }
 }

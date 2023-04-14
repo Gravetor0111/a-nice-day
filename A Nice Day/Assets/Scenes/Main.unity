@@ -234,8 +234,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_NoiseProfile: {fileID: 11400000, guid: 46965f9cbaf525742a6da4c2172a99cd, type: 2}
   m_PivotOffset: {x: 0, y: 0, z: 0}
-  m_AmplitudeGain: 1
-  m_FrequencyGain: 1
+  m_AmplitudeGain: 0.8
+  m_FrequencyGain: 0.5
   mNoiseOffsets: {x: -765.3436, y: 412.4553, z: 513.0689}
 --- !u!114 &152065234
 MonoBehaviour:
@@ -745,6 +745,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCam: {fileID: 0}
+  aimCam: {fileID: 0}
   vehicleCam: {fileID: 0}
 --- !u!114 &429180099
 MonoBehaviour:
@@ -1577,7 +1578,6 @@ GameObject:
   - component: {fileID: 1226218020}
   - component: {fileID: 1226218019}
   - component: {fileID: 1226218018}
-  - component: {fileID: 1226218017}
   m_Layer: 0
   m_Name: CM TPP Aim
   m_TagString: Untagged
@@ -1585,21 +1585,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1226218017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1226218016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8fce4bd108661c4d9740aea3bc971ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ActivationKey: 324
-  PriorityBoostAmount: 10
-  Reticle: {fileID: 2120504920}
 --- !u!114 &1226218018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1675,8 +1660,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1226218016}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -35.372025, y: 3.7630153, z: -5.05}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -35.373627, y: 3.7630153, z: -5.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1984,7 +1969,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1329124114}
   m_LocalRotation: {x: 0.0775891, y: 0, z: 0, w: 0.99698544}
-  m_LocalPosition: {x: -34.739838, y: 5.259311, z: -5.475756}
+  m_LocalPosition: {x: -34.742012, y: 5.259311, z: -5.475756}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2085,7 +2070,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1427771043}
   m_LocalRotation: {x: 0.07758909, y: 0, z: 0, w: 0.99698544}
-  m_LocalPosition: {x: -34.739838, y: 5.259311, z: -5.475756}
+  m_LocalPosition: {x: -34.742012, y: 5.259311, z: -5.475756}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6964,6 +6949,7 @@ MonoBehaviour:
   jumpHeight: 2
   gravityValue: -9.81
   carInteractionDistance: 10
+  Reticle: {fileID: 2120504920}
 --- !u!95 &5866666021381953898
 Animator:
   serializedVersion: 5

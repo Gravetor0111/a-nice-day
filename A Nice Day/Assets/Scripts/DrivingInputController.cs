@@ -63,6 +63,5 @@ public class DrivingInputController : MonoBehaviour
         InputManager.inCar = false;
         imObject.playerCam.Priority = 3;
         imObject.vehicleCam.Priority = 1;
-        Debug.Log("HAS LEFT THE CAR");
     }
 }

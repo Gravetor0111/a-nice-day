@@ -22,7 +22,7 @@ public class InputManager : MonoBehaviour
     private InputAction driveAction, exitAction, handBrakeAction;
 
     // Virtual CM Cameras
-    public CinemachineVirtualCamera playerCam, vehicleCam;
+    public CinemachineVirtualCamera playerCam, aimCam, vehicleCam;
     public static bool inCar;
 
     // Transform(s)
@@ -41,7 +41,8 @@ public class InputManager : MonoBehaviour
     void Start()
     {
         playerInput = GetComponent<PlayerInput>();
-        playerCam = GameObject.Find("CM TPP Aim").GetComponent<CinemachineVirtualCamera>();
+        playerCam = GameObject.Find("CM TPP Normal").GetComponent<CinemachineVirtualCamera>();
+        aimCam = GameObject.Find("CM TPP Aim").GetComponent<CinemachineVirtualCamera>();
         vehicleCam = GameObject.Find("CM Vehicle Normal").GetComponent<CinemachineVirtualCamera>();
         
         // For Player
@@ -72,22 +73,20 @@ public class InputManager : MonoBehaviour
     void Update()
     {
         // Player
-        if (!inCar)
-        {
+        
             movementInp = moveAction.ReadValue<Vector2>();
             jumpInp = jumpAction.ReadValue<float>();
             sprintInp = sprintAction.ReadValue<float>();
             enterInp = enterAction.ReadValue<float>();
             aimInp = aimAction.ReadValue<float>();
-        }
+        
         
         // Vehicle
-        if (inCar)
-        {
+        
             driveInp = driveAction.ReadValue<Vector2>();
             handBrakeInp = handBrakeAction.ReadValue<float>();
             exitInp = exitAction.ReadValue<float>();
-        } 
+        
         
         // Debug.Log(driveInp);
         // Debug.Log(handBrakeInp);
@@ -101,10 +100,10 @@ public class InputManager : MonoBehaviour
         // Debug.Log("Enter INP: " + enterInp);
         // Debug.Log("Exit INP: " + exitInp);
         // Debug.Log("Current Action: " + playerInput.actions);
+
         
         if (distance <= player1.carInteractionDistance && enterInp > 0f && !inCar)
         {
-            Debug.Log("Entering Car");
             player1.HopIn();
             playerInput.SwitchCurrentActionMap("Car");
             p1GameObject.SetActive(false);
@@ -112,7 +111,6 @@ public class InputManager : MonoBehaviour
 
         if (inCar && exitInp > 0f)
         {
-            Debug.Log("Exiting Car");
             vehicle1.GetOut();
             playerInput.SwitchCurrentActionMap("Player");
             p1GameObject.SetActive(true);
