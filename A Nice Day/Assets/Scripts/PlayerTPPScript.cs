@@ -17,6 +17,7 @@ public class PlayerTPPScript : MonoBehaviour
 
     // Sphere Collider
     private Transform sphereTransform;
+    private Transform cameraTransform;
     
     
 
@@ -26,6 +27,9 @@ public class PlayerTPPScript : MonoBehaviour
     private float jumpHeight = 2.0f;
     [SerializeField]
     private float gravityValue = -9.81f;
+    [SerializeField]
+    private float rotationSpeed = 10f;
+
     public float carInteractionDistance = 10f;
     public GameObject Reticle;
 
@@ -33,7 +37,8 @@ public class PlayerTPPScript : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
-        
+        cameraTransform = Camera.main.transform;
+
         // Car related stuff
         sphereTransform = transform.Find("TriggerSphere");
         SphereCollider sphereTrigger = sphereTransform.GetComponentInChildren<SphereCollider>();
@@ -49,7 +54,12 @@ public class PlayerTPPScript : MonoBehaviour
             playerVelocity.y = 0f;
         }
 
+        Vector3 moveDirection = new Vector3(InputManager.lookInp.x, 0, InputManager.lookInp.y);
         Vector3 move = new Vector3(InputManager.movementInp.x, 0, InputManager.movementInp.y);
+        move = move.x * cameraTransform.right.normalized + move.z * cameraTransform.forward.normalized;
+        move.y = 0f;
+
+        float inputMagnitude = Mathf.Clamp01(moveDirection.magnitude);
 
         if (move == Vector3.zero)
         {
@@ -65,6 +75,10 @@ public class PlayerTPPScript : MonoBehaviour
             }
         }
 
+        // Rotating character
+        Quaternion playerRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0f);
+        transform.rotation = Quaternion.Lerp(transform.rotation, playerRotation, rotationSpeed * Time.deltaTime);
+
         if (InputManager.jumpInp > 0f && groundedPlayer)
         {
             Jump();
@@ -78,10 +92,6 @@ public class PlayerTPPScript : MonoBehaviour
             Debug.Log(InputManager.aimInp);
             Aim();
         }
-
-        imObject.aimCam.Priority = 2;
-        boosted = false;
-        Reticle.SetActive(boosted);
 
 
         anim.SetBool("IsWalking", isWalking);
@@ -160,17 +170,17 @@ public class PlayerTPPScript : MonoBehaviour
 
     private void Aim()
     {
-        if (imObject.aimCam != null)
+        
+        if (!boosted)
         {
-            if (!boosted)
-            {
-                imObject.aimCam.Priority = 4;
-                boosted = true;
-            }
+            imObject.aimCam.Priority = 4;
+            boosted = true;
         }
-        if (Reticle != null)
+        else if (boosted)
         {
-            Reticle.SetActive(boosted);
+            imObject.aimCam.Priority = 2;
+            boosted = false;
         }
+        Reticle.SetActive(boosted);
     }
 }

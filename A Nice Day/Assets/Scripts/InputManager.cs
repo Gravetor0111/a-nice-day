@@ -16,7 +16,7 @@ public class InputManager : MonoBehaviour
 
 
     // Player Actions
-    private InputAction moveAction, sprintAction, jumpAction, enterAction, aimAction;
+    private InputAction moveAction, sprintAction, jumpAction, enterAction, lookAction, aimAction;
 
     // Vehicle Actions
     private InputAction driveAction, exitAction, handBrakeAction;
@@ -30,7 +30,7 @@ public class InputManager : MonoBehaviour
 
 
     // Player Input Variables
-    public static Vector2 movementInp;
+    public static Vector2 movementInp, lookInp;
     public static float sprintInp, jumpInp, enterInp, aimInp;
 
     // Vehicle Input Variables
@@ -50,6 +50,7 @@ public class InputManager : MonoBehaviour
         jumpAction = playerInput.actions["Jump"];
         sprintAction = playerInput.actions["Sprint"];
         enterAction = playerInput.actions["Enter"];
+        lookAction = playerInput.actions["Look"];
         aimAction = playerInput.actions["Aim"];
 
         // For Vehicle
@@ -78,6 +79,7 @@ public class InputManager : MonoBehaviour
             jumpInp = jumpAction.ReadValue<float>();
             sprintInp = sprintAction.ReadValue<float>();
             enterInp = enterAction.ReadValue<float>();
+            lookInp = lookAction.ReadValue<Vector2>();
             aimInp = aimAction.ReadValue<float>();
         
         
@@ -100,6 +102,7 @@ public class InputManager : MonoBehaviour
         // Debug.Log("Enter INP: " + enterInp);
         // Debug.Log("Exit INP: " + exitInp);
         // Debug.Log("Current Action: " + playerInput.actions);
+        Debug.Log("Look Action Inputs: " + lookAction.ReadValue<Vector2>());
 
         
         if (distance <= player1.carInteractionDistance && enterInp > 0f && !inCar)
