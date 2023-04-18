@@ -13,7 +13,7 @@ public class PlayerTPPScript : MonoBehaviour
     private InputManager imObject;
     private bool groundedPlayer;
     private bool isWalking, isRunning, isJumping;
-    bool boosted = false;
+    
 
     // Sphere Collider
     private Transform sphereTransform;
@@ -64,7 +64,10 @@ public class PlayerTPPScript : MonoBehaviour
         if (move == Vector3.zero)
         {
             Stand(move);
-        }
+            // Rotating character
+            Quaternion playerRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0f);
+            transform.rotation = Quaternion.Lerp(transform.rotation, playerRotation, rotationSpeed * Time.deltaTime);
+        }       
 
         if (move != Vector3.zero)
         {
@@ -75,9 +78,6 @@ public class PlayerTPPScript : MonoBehaviour
             }
         }
 
-        // Rotating character
-        Quaternion playerRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0f);
-        transform.rotation = Quaternion.Lerp(transform.rotation, playerRotation, rotationSpeed * Time.deltaTime);
 
         if (InputManager.jumpInp > 0f && groundedPlayer)
         {
@@ -89,8 +89,11 @@ public class PlayerTPPScript : MonoBehaviour
 
         if (InputManager.aimInp > 0f)
         {
-            Debug.Log(InputManager.aimInp);
             Aim();
+        }
+        else
+        {
+            Miss();
         }
 
 
@@ -166,21 +169,17 @@ public class PlayerTPPScript : MonoBehaviour
         InputManager.inCar = true;
         imObject.vehicleCam.Priority = 3;
         imObject.playerCam.Priority = 1;
+        imObject.p1GameObject.SetActive(false);
     }
 
     private void Aim()
     {
-        
-        if (!boosted)
-        {
-            imObject.aimCam.Priority = 4;
-            boosted = true;
-        }
-        else if (boosted)
-        {
-            imObject.aimCam.Priority = 2;
-            boosted = false;
-        }
-        Reticle.SetActive(boosted);
+        imObject.aimCam.Priority = 4;
+        Reticle.SetActive(true);
+    }
+    private void Miss()
+    {
+        imObject.aimCam.Priority = 2;
+        Reticle.SetActive(false);
     }
 }

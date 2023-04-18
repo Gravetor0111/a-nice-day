@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DrivingInputController : MonoBehaviour
 {
-    private GameObject gameManagerObj;
+    private GameObject gameManagerObj, exitPointObj;
     private InputManager imObject;
 
     //Car Inputs from InputManager
@@ -20,7 +20,7 @@ public class DrivingInputController : MonoBehaviour
     public float Throttle { get; set; }
     public float Brake { get; set; }
 
-    //private bool isBeingDriven = false;
+    
     private Rigidbody _rigidbody;
     private Wheel[] wheels;
 
@@ -29,6 +29,7 @@ public class DrivingInputController : MonoBehaviour
     {
         wheels = GetComponentsInChildren<Wheel>();
         _rigidbody = GetComponent<Rigidbody>();
+        exitPointObj = GameObject.Find("ExitPoint");
         _rigidbody.centerOfMass = CenterOfMass.localPosition;
         gameManagerObj = GameObject.Find("GameManager");
         imObject = gameManagerObj.GetComponentInChildren<InputManager>();
@@ -59,9 +60,10 @@ public class DrivingInputController : MonoBehaviour
 
     public void GetOut()
     {
-        InputManager.playerTransform.SetPositionAndRotation((InputManager.vehicleTransform.position - InputManager.vehicleTransform.TransformDirection(Vector3.left)), InputManager.vehicleTransform.rotation);
+        InputManager.playerTransform.position = exitPointObj.transform.position;
         InputManager.inCar = false;
         imObject.playerCam.Priority = 3;
         imObject.vehicleCam.Priority = 1;
+        imObject.p1GameObject.SetActive(true);
     }
 }

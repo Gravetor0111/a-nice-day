@@ -7,19 +7,21 @@ using Cinemachine;
 
 public class InputManager : MonoBehaviour
 {
-    GameObject p1GameObject, v1GameObject = null;
+    
     PlayerTPPScript player1;
     DrivingInputController vehicle1;
     
 
     private PlayerInput playerInput;
 
-
     // Player Actions
     private InputAction moveAction, sprintAction, jumpAction, enterAction, lookAction, aimAction;
 
     // Vehicle Actions
     private InputAction driveAction, exitAction, handBrakeAction;
+
+    // Game Objects
+    public GameObject p1GameObject, v1GameObject = null;
 
     // Virtual CM Cameras
     public CinemachineVirtualCamera playerCam, aimCam, vehicleCam;
@@ -102,21 +104,18 @@ public class InputManager : MonoBehaviour
         // Debug.Log("Enter INP: " + enterInp);
         // Debug.Log("Exit INP: " + exitInp);
         // Debug.Log("Current Action: " + playerInput.actions);
-        Debug.Log("Look Action Inputs: " + lookAction.ReadValue<Vector2>());
 
         
         if (distance <= player1.carInteractionDistance && enterInp > 0f && !inCar)
         {
             player1.HopIn();
             playerInput.SwitchCurrentActionMap("Car");
-            p1GameObject.SetActive(false);
         }
 
         if (inCar && exitInp > 0f)
         {
             vehicle1.GetOut();
             playerInput.SwitchCurrentActionMap("Player");
-            p1GameObject.SetActive(true);
         }
     }
 
