@@ -15,7 +15,7 @@ public class InputManager : MonoBehaviour
     private PlayerInput playerInput;
 
     // Player Actions
-    private InputAction moveAction, sprintAction, jumpAction, enterAction, lookAction, aimAction;
+    private InputAction moveAction, sprintAction, jumpAction, crouchAction, enterAction, lookAction, aimAction;
 
     // Vehicle Actions
     private InputAction driveAction, exitAction, handBrakeAction;
@@ -34,6 +34,7 @@ public class InputManager : MonoBehaviour
     // Player Input Variables
     public static Vector2 movementInp, lookInp;
     public static float sprintInp, jumpInp, enterInp, aimInp;
+    public static bool crouchInp;
 
     // Vehicle Input Variables
     public static Vector2 driveInp;
@@ -49,8 +50,9 @@ public class InputManager : MonoBehaviour
         
         // For Player
         moveAction = playerInput.actions["Movement"];
-        jumpAction = playerInput.actions["Jump"];
         sprintAction = playerInput.actions["Sprint"];
+        jumpAction = playerInput.actions["Jump"];
+        crouchAction = playerInput.actions["Crouch"];
         enterAction = playerInput.actions["Enter"];
         lookAction = playerInput.actions["Look"];
         aimAction = playerInput.actions["Aim"];
@@ -78,8 +80,9 @@ public class InputManager : MonoBehaviour
         // Player
         
             movementInp = moveAction.ReadValue<Vector2>();
-            jumpInp = jumpAction.ReadValue<float>();
             sprintInp = sprintAction.ReadValue<float>();
+            jumpInp = jumpAction.ReadValue<float>();
+            crouchInp = crouchAction.triggered;
             enterInp = enterAction.ReadValue<float>();
             lookInp = lookAction.ReadValue<Vector2>();
             aimInp = aimAction.ReadValue<float>();

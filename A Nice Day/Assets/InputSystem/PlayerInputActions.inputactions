@@ -6,15 +6,6 @@
             "id": "9dfc8405-100f-4750-9fcd-a526144746f5",
             "actions": [
                 {
-                    "name": "Jump",
-                    "type": "Button",
-                    "id": "14431560-aa5b-4131-929e-b9c37c9e3baa",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Movement",
                     "type": "Value",
                     "id": "91da62cc-264d-4ac8-85e0-34da0b37c691",
@@ -27,6 +18,24 @@
                     "name": "Sprint",
                     "type": "Button",
                     "id": "27b1d228-e261-406d-88d4-c8a0a50bb853",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "14431560-aa5b-4131-929e-b9c37c9e3baa",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Crouch",
+                    "type": "Button",
+                    "id": "71f55abd-2e42-4c10-9738-fe71e7794cb0",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -63,12 +72,34 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "086d8bff-b6a3-407b-86ce-6bbd94e37c02",
-                    "path": "<Keyboard>/space",
+                    "id": "e7c3bb40-1da1-47d4-b581-163ee2b3bc81",
+                    "path": "<Keyboard>/f",
+                    "interactions": "Hold(duration=1,pressPoint=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Enter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f903be87-5197-47cb-9f33-2877da058e46",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Jump",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "785b32a3-fa9c-41cf-8de1-9dd4b56df87e",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -129,6 +160,17 @@
                 },
                 {
                     "name": "",
+                    "id": "086d8bff-b6a3-407b-86ce-6bbd94e37c02",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "9c85344f-512e-4c21-a542-2eb44fc52a4f",
                     "path": "<Keyboard>/shift",
                     "interactions": "",
@@ -140,34 +182,12 @@
                 },
                 {
                     "name": "",
-                    "id": "e7c3bb40-1da1-47d4-b581-163ee2b3bc81",
-                    "path": "<Keyboard>/f",
-                    "interactions": "Hold(duration=1,pressPoint=1)",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Enter",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f903be87-5197-47cb-9f33-2877da058e46",
-                    "path": "<Mouse>/rightButton",
+                    "id": "ba32c916-2c8e-4b4a-8da2-1d84e2626060",
+                    "path": "<Keyboard>/c",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Aim",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "785b32a3-fa9c-41cf-8de1-9dd4b56df87e",
-                    "path": "<Mouse>/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Look",
+                    "action": "Crouch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

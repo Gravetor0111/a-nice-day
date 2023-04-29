@@ -12,7 +12,7 @@ public class PlayerTPPScript : MonoBehaviour
     private Vector3 playerVelocity;
     private InputManager imObject;
     private bool groundedPlayer;
-    private bool isWalking, isRunning, isJumping;
+    private bool isWalking, isRunning, isJumping, isCrouching, isCrawling, isAiming;
     
 
     // Sphere Collider
@@ -31,7 +31,8 @@ public class PlayerTPPScript : MonoBehaviour
     private float rotationSpeed = 10f;
 
     public float carInteractionDistance = 10f;
-    public GameObject Reticle;
+    public GameObject lookReticle;
+    public GameObject aimReticle;
 
     void Start()
     {
@@ -64,17 +65,25 @@ public class PlayerTPPScript : MonoBehaviour
         if (move == Vector3.zero)
         {
             Stand(move);
-            // Rotating character
-            Quaternion playerRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0f);
-            transform.rotation = Quaternion.Lerp(transform.rotation, playerRotation, rotationSpeed * Time.deltaTime);
+            CharacterLookAt();
+            if (InputManager.crouchInp)
+            {
+                CrouchIdle(move);
+                CharacterLookAt();
+            }
         }       
 
         if (move != Vector3.zero)
         {
             Walk(move);
-            if (InputManager.sprintInp > 0 && move != Vector3.zero)
+            if (InputManager.sprintInp > 0 && !isAiming)
             {
                 Run(move);
+            }
+            if (InputManager.crouchInp)
+            {
+                Debug.Log("IS CRAWLING");
+                Crawl(move);
             }
         }
 
@@ -97,8 +106,10 @@ public class PlayerTPPScript : MonoBehaviour
         }
 
 
-        anim.SetBool("IsWalking", isWalking);
-        anim.SetBool("IsRunning", isRunning);
+        anim.SetBool("isWalking", isWalking);
+        anim.SetBool("isRunning", isRunning);
+        anim.SetBool("isCrouching", isCrouching);
+        anim.SetBool("isCrouching", isCrawling);
         // anim.SetBool("IsJumping", isJumping);
     }
 
@@ -129,7 +140,11 @@ public class PlayerTPPScript : MonoBehaviour
 
     private void CrouchIdle(Vector3 move)
     {
-
+        isCrouching = true;
+        isWalking = false;
+        isRunning = false;
+        //isJumping = false;
+        isCrawling = false;
     }
 
     private void Walk(Vector3 move)
@@ -144,22 +159,31 @@ public class PlayerTPPScript : MonoBehaviour
     private void Run(Vector3 move)
     {
         isWalking = false;
+        isCrouching = false;
         isRunning = true;
         // isJumping = false;
-        controller.Move(move * Time.deltaTime * (playerSpeed * 2));
+        controller.Move(move * Time.deltaTime * (playerSpeed * 3));
     }
 
-    private void CrouchMove(Vector3 move)
+    private void Crawl(Vector3 move)
     {
-
+        Debug.Log("CRAWL METOD IS BEING CALLED!");
+        gameObject.transform.forward = move;
+        isCrouching = false;
+        isWalking = false;
+        isRunning = false;
+        //isJumping = false;
+        isCrawling = true;
+        controller.Move(move * Time.deltaTime * playerSpeed);
     }
 
     private void Jump()
     {
         isWalking = false;
         isRunning = false;
-        // isJumping = true;
-        Debug.Log("Jump");
+        isCrawling = false;
+        isCrouching = false;
+        //isJumping = true;
         playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
     }
 
@@ -172,14 +196,24 @@ public class PlayerTPPScript : MonoBehaviour
         imObject.p1GameObject.SetActive(false);
     }
 
+    private void CharacterLookAt()
+    {
+        // Rotating character
+        Quaternion playerRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0f);
+        transform.rotation = Quaternion.Lerp(transform.rotation, playerRotation, rotationSpeed * Time.deltaTime);
+    }
     private void Aim()
     {
         imObject.aimCam.Priority = 4;
-        Reticle.SetActive(true);
+        isAiming = true;
+        aimReticle.SetActive(isAiming);
+        lookReticle.SetActive(!isAiming);
     }
     private void Miss()
     {
         imObject.aimCam.Priority = 2;
-        Reticle.SetActive(false);
+        isAiming = false;
+        aimReticle.SetActive(isAiming);
+        lookReticle.SetActive(!isAiming);
     }
 }
