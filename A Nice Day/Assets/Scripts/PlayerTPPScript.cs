@@ -5,22 +5,19 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerTPPScript : MonoBehaviour
 {   
+    float velocity = 0.0f;
+    public float acceleration = 0.1f;
+    public float deceleration = 0.5f;
+    int velocityHash;
+
     private Animator anim;
     private CharacterController controller;
-    private GameObject triggerVolume;
-    private GameObject gameManagerObj;
+    private GameObject triggerVolume, gameManagerObj;
     private Vector3 playerVelocity;
     private InputManager imObject;
-    private bool groundedPlayer;
-    private bool isWalking, isRunning, isJumping, isCrouching, isCrawling, isAiming;
+    private bool groundedPlayer, isWalking, isRunning, isJumping, isCrouching, isCrawling, isAiming;
+    private Transform sphereTransform, cameraTransform;
     
-
-    // Sphere Collider
-    private Transform sphereTransform;
-    private Transform cameraTransform;
-    
-    
-
     [SerializeField]
     private float playerSpeed = 14.0f;
     [SerializeField]
@@ -39,6 +36,7 @@ public class PlayerTPPScript : MonoBehaviour
         anim = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
         cameraTransform = Camera.main.transform;
+        velocityHash = Animator.StringToHash("Velocity");
 
         // Car related stuff
         sphereTransform = transform.Find("TriggerSphere");
@@ -105,11 +103,9 @@ public class PlayerTPPScript : MonoBehaviour
             Miss();
         }
 
-
-        anim.SetBool("isWalking", isWalking);
-        anim.SetBool("isRunning", isRunning);
-        anim.SetBool("isCrouching", isCrouching);
-        anim.SetBool("isCrouching", isCrawling);
+        anim.SetFloat(velocityHash, velocity);
+        // anim.SetBool("isWalking", isWalking);
+        // anim.SetBool("isRunning", isRunning);
         // anim.SetBool("IsJumping", isJumping);
     }
 
@@ -133,9 +129,17 @@ public class PlayerTPPScript : MonoBehaviour
 
     private void Stand(Vector3 move)
     {
-        isWalking = false;
-        isRunning = false;
+        // isWalking = false;
+        // isRunning = false;
         // isJumping = false;
+        if (velocity > 0.0f)
+        {
+            velocity -= Time.deltaTime * deceleration;
+        }
+        if (velocity < 0.0f)
+        {
+            velocity = 0.0f;
+        }
     }
 
     private void CrouchIdle(Vector3 move)
@@ -150,10 +154,15 @@ public class PlayerTPPScript : MonoBehaviour
     private void Walk(Vector3 move)
     {
         gameObject.transform.forward = move;
-        isWalking = true;
-        isRunning = false;
+        // isWalking = true;
+        // isRunning = false;
         // isJumping = false;
+        Debug.Log(velocity);
         controller.Move(move * Time.deltaTime * playerSpeed);
+        if (velocity < 1.0f)
+        {
+            velocity += Time.deltaTime * acceleration;
+        }
     }
 
     private void Run(Vector3 move)
