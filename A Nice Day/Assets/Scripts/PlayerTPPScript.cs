@@ -103,10 +103,10 @@ public class PlayerTPPScript : MonoBehaviour
             Miss();
         }
 
-        anim.SetFloat(velocityHash, velocity);
-        // anim.SetBool("isWalking", isWalking);
-        // anim.SetBool("isRunning", isRunning);
-        // anim.SetBool("IsJumping", isJumping);
+        // anim.SetFloat(velocityHash, velocity);
+        anim.SetBool("IsWalking", isWalking);
+        anim.SetBool("IsRunning", isRunning);
+        anim.SetBool("IsJumping", isJumping);
     }
 
     
@@ -129,17 +129,17 @@ public class PlayerTPPScript : MonoBehaviour
 
     private void Stand(Vector3 move)
     {
-        // isWalking = false;
-        // isRunning = false;
-        // isJumping = false;
-        if (velocity > 0.0f)
-        {
-            velocity -= Time.deltaTime * deceleration;
-        }
-        if (velocity < 0.0f)
-        {
-            velocity = 0.0f;
-        }
+        isWalking = false;
+        isRunning = false;
+        isJumping = false;
+        // if (velocity > 0.0f)
+        // {
+        //     velocity -= Time.deltaTime * deceleration;
+        // }
+        // if (velocity < 0.0f)
+        // {
+        //     velocity = 0.0f;
+        // }
     }
 
     private void CrouchIdle(Vector3 move)
@@ -147,30 +147,30 @@ public class PlayerTPPScript : MonoBehaviour
         isCrouching = true;
         isWalking = false;
         isRunning = false;
-        //isJumping = false;
+        isJumping = false;
         isCrawling = false;
     }
 
     private void Walk(Vector3 move)
     {
         gameObject.transform.forward = move;
-        // isWalking = true;
-        // isRunning = false;
-        // isJumping = false;
+        isWalking = true;
+        isRunning = false;
+        isJumping = false;
         Debug.Log(velocity);
         controller.Move(move * Time.deltaTime * playerSpeed);
-        if (velocity < 1.0f)
-        {
-            velocity += Time.deltaTime * acceleration;
-        }
+        // if (velocity < 1.0f)
+        // {
+        //     velocity += Time.deltaTime * acceleration;
+        // }
     }
 
     private void Run(Vector3 move)
     {
-        isWalking = false;
+        isWalking = true;
         isCrouching = false;
         isRunning = true;
-        // isJumping = false;
+        isJumping = false;
         controller.Move(move * Time.deltaTime * (playerSpeed * 3));
     }
 
@@ -181,7 +181,7 @@ public class PlayerTPPScript : MonoBehaviour
         isCrouching = false;
         isWalking = false;
         isRunning = false;
-        //isJumping = false;
+        isJumping = false;
         isCrawling = true;
         controller.Move(move * Time.deltaTime * playerSpeed);
     }
@@ -192,7 +192,7 @@ public class PlayerTPPScript : MonoBehaviour
         isRunning = false;
         isCrawling = false;
         isCrouching = false;
-        //isJumping = true;
+        isJumping = true;
         playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
     }
 
